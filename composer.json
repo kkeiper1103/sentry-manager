@@ -1,0 +1,26 @@
+{
+    "name": "kkeiper1103/sentry-manager",
+    "description": "A Minimalistic, Laravel-Specific User Management Package. Provides User Registration, Login, and Update Views.",
+    "authors": [
+        {
+            "name": "Kyle Keiper",
+            "email": "goldentoa11@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "illuminate/support": "4.2.*",
+        "andheiberg/notify": "1.*"
+    },
+    "autoload": {
+        "classmap": [
+            "src/migrations",
+            "src/controllers",
+            "src/commands"
+        ],
+        "psr-0": {
+            "Kkeiper1103\\SentryManager\\": "src/"
+        }
+    },
+    "minimum-stability": "stable"
+}

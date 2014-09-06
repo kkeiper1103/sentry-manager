@@ -1,6 +1,7 @@
 {
     "name": "kkeiper1103/sentry-manager",
     "description": "A Minimalistic, Laravel-Specific User Management Package. Provides User Registration, Login, and Update Views.",
+    "tags": ["laravel"],
     "authors": [
         {
             "name": "Kyle Keiper",

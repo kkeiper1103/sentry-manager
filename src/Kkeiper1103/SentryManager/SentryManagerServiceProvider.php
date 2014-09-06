@@ -22,6 +22,7 @@ class SentryManagerServiceProvider extends ServiceProvider {
 
         $this->commands("commands.installGroupCommand");
         $this->commands("commands.installSuperuserCommand");
+        $this->commands("commands.installPackageCommand");
 
         require __DIR__.'/../../routes.php';
         require __DIR__.'/../../filters.php';
@@ -58,6 +59,10 @@ class SentryManagerServiceProvider extends ServiceProvider {
 
         $this->app->bind("commands.installSuperuserCommand", function($app){
             return new \Kkeiper1103\SentryManager\commands\InstallSuperuserCommand;
+        });
+
+        $this->app->bind("commands.installPackageCommand", function($app){
+            return new \Kkeiper1103\SentryManager\commands\InstallPackageCommand;
         });
 
 	}

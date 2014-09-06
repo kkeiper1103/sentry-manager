@@ -40,13 +40,15 @@ class SentryManagerServiceProvider extends ServiceProvider {
             return new SentryManager();
         });
 
-        // register other service providers
+        // register dependent service providers
         $this->app->register('Andheiberg\Notify\NotifyServiceProvider');
+        $this->app->register('Cartalyst\Sentry\SentryServiceProvider');
 
         $this->app->booting(function()
         {
             $loader = \Illuminate\Foundation\AliasLoader::getInstance();
             $loader->alias('Notify', '\Andheiberg\Notify\Facades\Notify');
+            $loader->alias("Sentry", 'Cartalyst\Sentry\Facades\Laravel\Sentry');
         });
 
         // register artisan commands

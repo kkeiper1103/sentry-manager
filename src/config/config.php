@@ -68,6 +68,9 @@ return array(
     "password_rules" => "required|min:8|confirmed",
 
     // rules for password validator on user update
-    "password_rules_update" => "required_with:password_confirmation|min:8|confirmed"
+    "password_rules_update" => "required_with:password_confirmation|min:8|confirmed",
+
+    // URL base for the users section
+    "url_base" => "cp"
 
 );

@@ -10,7 +10,7 @@ Create New User
 
     @include(
         "sentry-manager::sentry.users._form",
-        array("user" => $user)
+        array("user" => $user, "url_base" => $url_base)
     )
 
 </div>

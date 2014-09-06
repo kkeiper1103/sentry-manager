@@ -9,7 +9,7 @@ Users Overview
     <h2>Users Administration</h2>
 
     <p>
-        {{ link_to_route("sentry.users.create", "Add New User", null, [
+        {{ link_to_route("{$url_base}.users.create", "Add New User", null, [
         "class" => "btn btn-primary"
         ]) }}
     </p>
@@ -34,11 +34,11 @@ Users Overview
             <td>{{ date("M j, Y", strtotime($u->created_at)) }}</td>
             <td>{{ date("M j, Y - g:i:s A", strtotime($u->last_login)) }}</td>
             <td>{{ ($u->activated) ? "Yes" : "No (" . link_to("sentry/send-activation-email/" . $u->id, "Send Activation Email") . ")" }}</td>
-            <td>{{ link_to_route("sentry.users.edit", "Edit", $u->id, ["class" => "btn btn-link"]) }}</td>
+            <td>{{ link_to_route("{$url_base}.users.edit", "Edit", $u->id, ["class" => "btn btn-link"]) }}</td>
             <td>
                 {{ Form::open([
                     "method" => "delete",
-                    "route" => array("sentry.users.destroy", $u->id)
+                    "route" => array("{$url_base}.users.destroy", $u->id)
                 ]) }}
 
                 <button class="btn btn-link">Delete</button>
@@ -51,7 +51,7 @@ Users Overview
     </table>
 
     <p>
-        {{ link_to_route("sentry.users.create", "Add New User", null, [
+        {{ link_to_route("{$url_base}.users.create", "Add New User", null, [
         "class" => "btn btn-primary"
         ]) }}
     </p>

@@ -1,11 +1,11 @@
 @if( $user->exists )
 {{ Form::model($user, [
-    "route" => [ "sentry.users.update", $user->id ],
+    "route" => [ "{$url_base}.users.update", $user->id ],
     "method" => "patch"
 ]) }}
 @else
 {{ Form::model($user, [
-    "route" => [ "sentry.users.store" ],
+    "route" => [ "{$url_base}.users.store" ],
     "method" => "post"
 ]) }}
 @endif
@@ -90,7 +90,7 @@
 </div>
 @endif
 
-{{ link_to_route("sentry.users.index", "Back", null, [
+{{ link_to_route("{$url_base}.users.index", "Back", null, [
     "class" => "btn btn-warning"
 ]) }}
 

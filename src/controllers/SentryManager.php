@@ -71,7 +71,7 @@ class SentryManager extends Controller{
             Notify::error("Invalid Credentials Supplied.");
         }
 
-        return redirect::to("sentry/login");
+        return redirect::to( \Config::get("sentry-manager::url_base") . "/login" );
 
     }
 
@@ -147,7 +147,7 @@ class SentryManager extends Controller{
 
         Notify::error("There Were Errors With Your Registration. Please See Below.");
 
-        return Redirect::to("sentry/register")->withErrors($v);
+        return Redirect::to( \Config::get("sentry-manager::url_base") . "/register")->withErrors($v);
     }
 
     /**
@@ -186,7 +186,7 @@ class SentryManager extends Controller{
 
         Notify::success("Password Reset Email Has Been Sent. Please Check Your Email For More Instructions.");
 
-        return Redirect::to("sentry/login");
+        return Redirect::to( \Config::get("sentry-manager::url_base") . "/login" );
     }
 
 
@@ -231,7 +231,7 @@ class SentryManager extends Controller{
                     if ($user->attemptResetPassword( $token , Input::get("password")))
                     {
                         Notify::success("Password Successfully Reset. Please Log In.");
-                        return Redirect::to("sentry/login");
+                        return Redirect::to( \Config::get("sentry-manager::url_base") . "/login" );
                     }
                     else
                     {
@@ -240,19 +240,19 @@ class SentryManager extends Controller{
                 }
                 else
                 {
-                    return Redirect::to("sentry/reset/{$id}/{$token}")->withErrors($v);
+                    return Redirect::to( \Config::get("sentry-manager::url_base") . "/reset/{$id}/{$token}")->withErrors($v);
                 }
             }
             else
             {
                 Notify::error("Invalid Password Reset Code.");
-                return Redirect::to("sentry/login");
+                return Redirect::to( \Config::get("sentry-manager::url_base") . "/login" );
             }
         }
         catch(\Exception $e)
         {}
 
-        return Redirect::to("sentry/login");
+        return Redirect::to( \Config::get("sentry-manager::url_base") . "/login" );
     }
 
 
@@ -280,7 +280,7 @@ class SentryManager extends Controller{
             Notify::error("User Could Not Be Activated Or Is Already Activated.");
         }
 
-        return Redirect::to("sentry/login");
+        return Redirect::to( \Config::get("sentry-manager::url_base") . "/login" );
     }
 
     /**
@@ -317,7 +317,7 @@ class SentryManager extends Controller{
 
         Notify::success("Sent Activation Email To User.");
 
-        return Redirect::to( Sentry::check() ? "sentry/users" : "sentry/login" );
+        return Redirect::to( Sentry::check() ? \Config::get("sentry-manager::url_base") . "/users" : \Config::get("sentry-manager::url_base") . "/login" );
     }
 
     /**

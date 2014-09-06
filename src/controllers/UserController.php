@@ -23,15 +23,20 @@ class UserController extends Controller {
 
     protected $_login_attribute;
 
+    // Used for routing, but NOT view names.
+    protected $_url_base;
+
     public function __construct()
     {
         $this->_login_attribute = Config::get('cartalyst/sentry::users.login_attribute');
+        $this->_url_base = \Config::get("sentry-manager::url_base");
     }
 
     public function index()
     {
         return View::make( "sentry-manager::sentry.users.index" )
-            ->with("users", Sentry::findAllUsers());
+            ->with("users", Sentry::findAllUsers())
+            ->with("url_base", $this->_url_base);
     }
 
     public function create()
@@ -39,7 +44,8 @@ class UserController extends Controller {
         $user = new \User();
 
         return View::make("sentry-manager::sentry.users.create")
-            ->with("user", $user);
+            ->with("user", $user)
+            ->with("url_base", $this->_url_base);
     }
 
     public function store()
@@ -80,12 +86,12 @@ class UserController extends Controller {
             catch(\Cartalyst\Sentry\Users\UserExistsException $e)
             {
                 Notify::error("User Already Exists!");
-                return Redirect::route("sentry.users.create")->withInput();
+                return Redirect::route("{$this->_url_base}.users.create")->withInput();
             }
             catch(\Exception $e)
             {
                 Notify::error( "There Was An Error Processing Your Registration. Please Try Again." );
-                return Redirect::route("sentry.users.create")->withInput();
+                return Redirect::route("{$this->_url_base}.users.create")->withInput();
             }
 
             // by default, when an admin creates a user, don't require activation
@@ -123,12 +129,12 @@ class UserController extends Controller {
 
             Notify::success("User Has Been Created.");
 
-            return Redirect::route("sentry.users.index");
+            return Redirect::route("{$this->_url_base}.users.index");
         }
 
         Notify::error("There Were Errors With Your Registration. Please See Below.");
 
-        return Redirect::route("sentry.users.create")->withInput()->withErrors($v);
+        return Redirect::route("{$this->_url_base}.users.create")->withInput()->withErrors($v);
     }
 
     public function show($id)
@@ -136,7 +142,8 @@ class UserController extends Controller {
         $user = Sentry::findUserById($id);
 
         return View::make("sentry-manager::sentry.users.show")
-            ->with("user", $user);
+            ->with("user", $user)
+            ->with("url_base", $this->_url_base);
     }
 
     public function edit($id)
@@ -144,7 +151,8 @@ class UserController extends Controller {
         $user = Sentry::findUserById($id);
 
         return View::make("sentry-manager::sentry.users.edit")
-            ->with("user", $user);
+            ->with("user", $user)
+            ->with("url_base", $this->_url_base);
     }
 
     public function update($id)
@@ -186,13 +194,13 @@ class UserController extends Controller {
             }
 
             Notify::success( "Successfully Updated User {$user->{$this->_login_attribute}}." );
-            return Redirect::route("sentry.users.index");
+            return Redirect::route("{$this->_url_base}.users.index");
         }
         else
         {
             Notify::error( "There Were Errors With Your Input." );
 
-            return Redirect::route("sentry.users.edit", $id)
+            return Redirect::route("{$this->_url_base}.users.edit", $id)
                 ->withInput()
                 ->withErrors($v);
         }
@@ -206,7 +214,7 @@ class UserController extends Controller {
 
         Notify::success( "User {$user->{$this->_login_attribute}} Has Been Deleted." );
 
-        return Redirect::route("sentry.users.index");
+        return Redirect::route("{$this->_url_base}.users.index");
     }
 
 } 

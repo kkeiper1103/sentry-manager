@@ -10,7 +10,7 @@ Editing {{ $user->{Config::get("cartalyst/sentry::users.login_attribute")} }}
 
     @include(
     "sentry-manager::sentry.users._form",
-    array("user" => $user)
+    array("user" => $user, "url_base" => $url_base)
     )
 
 </div>

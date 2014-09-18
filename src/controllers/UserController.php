@@ -70,13 +70,8 @@ class UserController extends Controller {
 
                 $user = Sentry::createUser($userArgs);
 
-		$extraSettings = \Config::get("sentry-manager::extra_attributes");
-		foreach($extraSettings as $key)
-		{
-			if( $value = Input::get($key, false) )
-				$user->{$key} = $value;
-		}
-		$user->save();
+		// fire an event so someone can hook in and add attributes
+		$event = \Event::fire("sentry-manager.updateUser", array($user));
 
                 try
                 {
@@ -183,12 +178,8 @@ class UserController extends Controller {
             $user->last_name = $input['last_name'];
             $user->activated = $input['activated'];
 
-		$extraSettings = \Config::get("sentry-manager::extra_attributes");
-		foreach($extraSettings as $key)
-		{
-			if( $value = Input::get($key, false) )
-				$user->{$key} = $value;
-		}
+	    // fire an event when updating user so it can hook in and add custom functionality
+	    $event = \Event::fire("sentry-manager.updateUser", array($user));
 
             if( ! empty($input['password']))
                 $user->password = $input['password'];

@@ -70,6 +70,14 @@ class UserController extends Controller {
 
                 $user = Sentry::createUser($userArgs);
 
+		$extraSettings = \Config::get("sentry-manager::extra_attributes");
+		foreach($extraSettings as $key)
+		{
+			if( $value = Input::get($key, false) )
+				$user->{$key} = $value;
+		}
+		$user->save();
+
                 try
                 {
                     // try adding group. don't crash is group isn't found.
@@ -174,6 +182,13 @@ class UserController extends Controller {
             $user->first_name = $input['first_name'];
             $user->last_name = $input['last_name'];
             $user->activated = $input['activated'];
+
+		$extraSettings = \Config::get("sentry-manager::extra_attributes");
+		foreach($extraSettings as $key)
+		{
+			if( $value = Input::get($key, false) )
+				$user->{$key} = $value;
+		}
 
             if( ! empty($input['password']))
                 $user->password = $input['password'];

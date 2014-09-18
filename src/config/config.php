@@ -71,6 +71,11 @@ return array(
     "password_rules_update" => "required_with:password_confirmation|min:8|confirmed",
 
     // URL base for the users section
-    "url_base" => "cp"
+    "url_base" => "cp",
+
+    // add custom fields to save to user model
+    "extra_attributes" => array(
+        // "avatar", "company_name", "etc" ...
+    )
 
 );
